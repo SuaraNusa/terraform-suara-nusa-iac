@@ -1,4 +1,10 @@
 provider "google" {
   project = "suaranusa-labs"
-  region  = "asia-southeast2" // Jakarta
+  region  = "us-west1" // Jakarta
 }
+
+provider "github" {
+  token = var.github_token
+  owner = var.github_username
+}
+
