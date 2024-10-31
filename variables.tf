@@ -1,15 +1,15 @@
-# variable "github_token" {
-#   description = "GitHub token for authentication"
-#   type        = string
-#   default     = ""  # Pastikan default dikosongkan
-# }
-#
-# variable "github_username" {
-#   description = "GitHub username for authentication"
-#   type        = string
-#   default     = ""
-# }
-#
+variable "github_token" {
+  description = "GitHub token for authentication"
+  type        = string
+  default     = ""  # Pastikan default dikosongkan
+}
+
+variable "github_username" {
+  description = "GitHub username for authentication"
+  type        = string
+  default     = ""
+}
+
 variable "project_id" {
   description = "ID of the Google Cloud project."
   type        = string
@@ -24,14 +24,14 @@ variable "region" {
 variable "service_account_role" {
   description = "Role for service account"
 }
-#
-# variable "repository_name" {
-#   description = "Name of the GitHub repository."
-#   type        = string
-# }
-#
-# variable "branch" {
-#   description = "Branch to trigger builds on."
-#   type        = string
-#   default     = "main"
-# }
+
+variable "repository_name" {
+  description = "Name of the GitHub repository."
+  type        = string
+}
+
+variable "branch" {
+  description = "Branch to trigger builds on."
+  type        = string
+  default     = "main"
+}

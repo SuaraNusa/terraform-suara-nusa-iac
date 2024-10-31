@@ -1,15 +1,25 @@
-resource "google_cloudbuild_trigger" "github_trigger" {
-  project     = var.project_id
-  name        = "github-cloud-build-trigger"
-  description = "Trigger build when there is a push to GitHub"
+resource "google_cloudbuild_trigger" "trigger-api" {
+  name = "trigger-api"
 
   github {
-    owner = var.github_username
-    name  = var.repository_name
+    owner = "suara-nusa"
+    name  = "nest-suara-nusa-api"
     push {
-      branch = var.branch
+      branch = "main"
     }
   }
 
-  filename = "cloudbuild.yaml"
+  build {
+    step {
+      name = "gcr.io/cloud-builders/docker"
+      args = ["build", "-t", "gcr.io/${var.project_id}/suara-nusa-api", "."]
+    }
+
+    step {
+      name = "gcr.io/cloud-builders/docker"
+      args = ["push", "gcr.io/${var.project_id}/suara-nusa-api"]
+    }
+
+    images = ["gcr.io/${var.project_id}/suara-nusa-api"]
+  }
 }
