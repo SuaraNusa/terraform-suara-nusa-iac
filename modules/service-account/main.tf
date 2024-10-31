@@ -5,18 +5,10 @@ resource "google_service_account" "service_account" {
   create_ignore_already_exists = true
 }
 
-resource "google_service_account_iam_binding" "storage-object-admin" {
+resource "google_service_account_iam_binding" "service_account_binding" {
+  for_each           = var.service_account_role
   service_account_id = google_service_account.service_account.name
-  role               = "roles/storage.objectAdmin"
-
-  members = [
-    "serviceAccount:${google_service_account.service_account.email}", // Menggunakan service account itu sendiri
-  ]
-}
-
-resource "google_service_account_iam_binding" "cloud-run-admin" {
-  service_account_id = google_service_account.service_account.name
-  role               = "roles/run.admin"
+  role               = each.value
 
   members = [
     "serviceAccount:${google_service_account.service_account.email}", // Menggunakan service account itu sendiri
