@@ -14,3 +14,15 @@ resource "google_service_account_iam_binding" "service_account_binding" {
     "serviceAccount:${google_service_account.service_account.email}", // Menggunakan service account itu sendiri
   ]
 }
+
+resource "google_service_account_key" "service_account_key" {
+  service_account_id = google_service_account.service_account.email
+}
+
+output "service_account_key" {
+  value = google_service_account_key.service_account_key.private_key
+}
+
+output "service_account_email" {
+  value = google_service_account.service_account.email
+}
