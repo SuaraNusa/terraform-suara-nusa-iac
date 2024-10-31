@@ -20,6 +20,10 @@ variable "region" {
   description = "Region for Google Cloud services."
   type        = string
 }
+
+variable "service_account_role" {
+  description = "Role for service account"
+}
 #
 # variable "repository_name" {
 #   description = "Name of the GitHub repository."

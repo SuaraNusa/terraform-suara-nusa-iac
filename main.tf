@@ -17,6 +17,7 @@ provider "github" {
 # }
 
 module "service_account" {
-  source = "./modules/service-account"
+  source               = "./modules/service-account"
+  service_account_role = var.service_account_role
 }
 
