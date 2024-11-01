@@ -34,3 +34,8 @@ module "cloud_run" {
   image_name             = module.cloud_build.suara_nusa_api_image_name
   location               = var.location
 }
+
+
+module "cloud_sql" {
+  source = "./modules/cloud-sql"
+}
