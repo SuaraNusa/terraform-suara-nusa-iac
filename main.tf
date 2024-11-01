@@ -1,5 +1,5 @@
 provider "google" {
-  project = "suara-nusa-labs"
+  project = var.project_name
   region  = var.region// Jakarta
 }
 
@@ -19,5 +19,11 @@ module "cloud_build" {
 module "service_account" {
   source               = "./modules/service-account"
   service_account_role = var.service_account_role
+}
+
+module "container_registry" {
+  source = "./modules/container-registry"
+  project_name = var.project_name
+  location = "us-west1"
 }
 

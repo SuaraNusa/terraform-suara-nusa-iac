@@ -35,3 +35,9 @@ variable "branch" {
   type        = string
   default     = "main"
 }
+
+variable "project_name" {
+  description = "Name of the GCP project."
+  type        = string
+  default     = "suara-nusa-labs"
+}
