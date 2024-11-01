@@ -41,3 +41,9 @@ variable "project_name" {
   type        = string
   default     = "suara-nusa-labs"
 }
+
+variable "location" {
+  description = "Location of the bucket."
+  type        = string
+  default     = "us-west1"
+}

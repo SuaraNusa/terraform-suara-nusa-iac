@@ -22,8 +22,15 @@ module "service_account" {
 }
 
 module "container_registry" {
-  source = "./modules/container-registry"
+  source       = "./modules/container-registry"
   project_name = var.project_name
-  location = "us-west1"
+  location     = "us-west1"
 }
 
+
+module "cloud_run" {
+  source                 = "./modules/cloud-run"
+  cloud_run_service_name = "crun"
+  image_name             = module.cloud_build.suara_nusa_api_image_name
+  location               = var.location
+}
