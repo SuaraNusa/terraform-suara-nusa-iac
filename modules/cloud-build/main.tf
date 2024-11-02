@@ -15,10 +15,11 @@ resource "google_project_iam_member" "logs_writer" {
   role    = "roles/logging.logWriter"
   member  = "serviceAccount:${google_service_account.cloudbuild_service_account.email}"
 }
+
 resource "google_project_iam_member" "cloudbuild_sa_secret_accessor" {
   project = var.project_id
   role    = "roles/secretmanager.secretAccessor"
-  member  = "serviceAccount:${google_service_account.cloudbuild_service_account.email}"
+  member  = "serviceAccount:service-${var.project_number}@gcp-sa-cloudbuild.iam.gserviceaccount.com"
 }
 
 resource "google_secret_manager_secret" "github-token-secret" {
@@ -62,8 +63,10 @@ resource "google_cloudbuildv2_repository" "repository" {
 
 
 resource "google_cloudbuild_trigger" "trigger-api" {
-  name     = "trigger-api"
-  location = "us-west1"
+  name            = "trigger-api"
+  location        = "us-west1"
+  service_account = google_service_account.cloudbuild_service_account.id  # Menggunakan akun layanan kustom
+
   repository_event_config {
     repository = google_cloudbuildv2_repository.repository.id
     push {
@@ -74,17 +77,22 @@ resource "google_cloudbuild_trigger" "trigger-api" {
   build {
     step {
       name = "gcr.io/cloud-builders/docker"
-      args = ["build", "-t", "gcr.io/${var.project_id}/suara-nusa-api", "."]
+      args = [
+        "build", "-t",
+        "${var.region}-docker.pkg.dev/${var.project_id}/suara-nusa-labs/suara-nusa-api",
+        "."
+      ]
     }
-
     step {
       name = "gcr.io/cloud-builders/docker"
-      args = ["push", "gcr.io/${var.project_id}/suara-nusa-api"]
+      args = [
+        "push",
+        "${var.region}-docker.pkg.dev/${var.project_id}/suara-nusa-labs/suara-nusa-api",
+      ]
     }
 
-    images = ["gcr.io/${var.project_id}/suara-nusa-api"]
+    images = ["${var.region}-docker.pkg.dev/${var.project_id}/suara-nusa-labs/suara-nusa-api"]
   }
-  service_account = google_service_account.cloudbuild_service_account.id
   depends_on = [google_cloudbuildv2_repository.repository]
 }
 

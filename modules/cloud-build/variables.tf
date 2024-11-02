@@ -9,18 +9,12 @@ variable "region" {
   type        = string
 }
 
-variable "repository_name" {
-  description = "Name of the GitHub repository."
-  type        = string
-}
-
 variable "branch" {
   description = "Branch to trigger builds on."
   type        = string
   default     = "main"
 }
 
-
-variable "github_username" {
-  description = "Username for Github authentication."
+variable "project_number" {
+  description = "The project number for Cloud build"
 }
