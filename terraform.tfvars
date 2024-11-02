@@ -1,7 +1,9 @@
-project_id      = "suara-nusa-labs"
-region          = "us-west1"
-github_username = "alfarezyyd"
-project_name    = "suara-nusa-labs"
-github_token    = "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"
-repository_name = "dicoding-asclepius-api"
-service_account_role = ["roles/storage.objectAdmin", "roles/run.admin",]
+# Project Configuration
+project_id     = "suara-nusa-labs"
+project_number = 158751523704
+project_name = "suara-nusa-labs"
+# Region
+region = "us-west1"
+zone = "us-west1-a"
+# IAM
+service_account_role = ["roles/storage.objectAdmin", "roles/run.admin"]
