@@ -1,24 +1,19 @@
 provider "google" {
   project = var.project_name
-  region  = var.region// Jakarta
+  region  = var.region
 }
 
-# provider "github" {
-#   token = var.github_token
-#   owner = var.github_username
-# }
 
 module "cloud_build" {
   source          = "./modules/cloud-build"
-  github_username = var.github_username
   project_id      = var.project_id
   region          = var.region
-  repository_name = var.repository_name
+  project_number  = var.project_number
 }
 
 module "container_registry" {
-  source       = "./modules/container-registry"
-  project_name = var.project_name
+  source     = "./modules/container-registry"
+  project_id = var.project_id
 }
 
 

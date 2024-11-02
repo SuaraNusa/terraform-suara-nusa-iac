@@ -1,39 +1,6 @@
-variable "github_token" {
-  description = "GitHub token for authentication"
-  type        = string
-  default     = ""  # Pastikan default dikosongkan
-}
-
-variable "github_username" {
-  description = "GitHub username for authentication"
-  type        = string
-  default     = ""
-}
-
 variable "project_id" {
   description = "ID of the Google Cloud project."
   type        = string
-
-}
-#
-variable "region" {
-  description = "Region for Google Cloud services."
-  type        = string
-}
-
-variable "service_account_role" {
-  description = "Role for service account"
-}
-
-variable "repository_name" {
-  description = "Name of the GitHub repository."
-  type        = string
-}
-
-variable "branch" {
-  description = "Branch to trigger builds on."
-  type        = string
-  default     = "main"
 }
 
 variable "project_name" {
@@ -42,8 +9,29 @@ variable "project_name" {
   default     = "suara-nusa-labs"
 }
 
+variable "project_number" {
+  description = "Number of the GCS project."
+  type        = string
+}
+
+variable "region" {
+  description = "Region for Google Cloud services."
+  type        = string
+}
+
+variable "zone" {
+  description = "Zone of Google Cloud region."
+  type        = string
+}
+
+variable "service_account_role" {
+  description = "Role for service account"
+}
+
+
 variable "location" {
   description = "Location of the bucket."
   type        = string
   default     = "us-west1"
 }
+
