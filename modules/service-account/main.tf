@@ -1,28 +1,24 @@
-resource "google_service_account" "service_account" {
-  account_id                   = "terraform-service-account"
-  display_name                 = "Terraform Service Account"
-  description                  = "Service account for terraform"
-  create_ignore_already_exists = true
+# Cloud Build Service Account
+resource "google_service_account" "cloudbuild_service_account" {
+  account_id   = "cloudbuild-sa"
+  display_name = "cloudbuild-sa"
+  description  = "Cloud build service account"
 }
 
-resource "google_service_account_iam_binding" "service_account_binding" {
-  for_each           = var.service_account_role
-  service_account_id = google_service_account.service_account.name
-  role               = each.value
-
-  members = [
-    "serviceAccount:${google_service_account.service_account.email}", // Menggunakan service account itu sendiri
-  ]
+resource "google_project_iam_member" "act_as" {
+  project = var.project_id
+  role    = "roles/iam.serviceAccountUser"
+  member  = "serviceAccount:${google_service_account.cloudbuild_service_account.email}"
 }
 
-resource "google_service_account_key" "service_account_key" {
-  service_account_id = google_service_account.service_account.email
+resource "google_project_iam_member" "logs_writer" {
+  project = var.project_id
+  role    = "roles/logging.logWriter"
+  member  = "serviceAccount:${google_service_account.cloudbuild_service_account.email}"
 }
 
-output "service_account_key" {
-  value = google_service_account_key.service_account_key.private_key
+
+output "cloudbuild_service_account_id" {
+  value = google_service_account.cloudbuild_service_account.id
 }
 
-output "service_account_email" {
-  value = google_service_account.service_account.email
-}

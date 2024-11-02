@@ -1,7 +1,6 @@
 variable "project_id" {
   description = "ID of the Google Cloud project."
   type        = string
-
 }
 
 variable "region" {
@@ -17,4 +16,10 @@ variable "branch" {
 
 variable "project_number" {
   description = "The project number for Cloud build"
+  type        = string
+}
+
+variable "service_account_id" {
+  description = "Service account ID for Terraform service account."
+  type        = string
 }
