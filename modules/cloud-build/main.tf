@@ -1,4 +1,3 @@
-
 resource "google_project_iam_member" "cloudbuild_sa_secret_accessor" {
   project = var.project_id
   role    = "roles/secretmanager.secretAccessor"
@@ -58,6 +57,10 @@ resource "google_cloudbuild_trigger" "trigger-api" {
   }
 
   build {
+    options {
+      logging = "NONE"
+    }
+
     step {
       name = "gcr.io/cloud-builders/docker"
       args = [
