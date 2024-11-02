@@ -1,4 +1,3 @@
-variable project_name {
-  description = "Name of the Github service project"
-  type        = string
+variable "project_id" {
+  description = "Project id for naming the container registry."
 }
