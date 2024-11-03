@@ -10,6 +10,7 @@ module "cloud_build" {
   region             = var.region
   project_number     = var.project_number
   service_account_id = module.service_account.cloudbuild_service_account_id
+  github_personal_access_token = var.github_personal_access_token
 }
 
 module "container_registry" {

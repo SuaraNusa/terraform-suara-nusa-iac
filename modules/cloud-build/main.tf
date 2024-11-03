@@ -14,7 +14,7 @@ resource "google_secret_manager_secret" "github-token-secret" {
 
 resource "google_secret_manager_secret_version" "github-token-secret-version" {
   secret      = google_secret_manager_secret.github-token-secret.id
-  secret_data = "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"
+  secret_data = var.github_personal_access_token
 }
 
 # Membuat koneksi ke GitHub
@@ -66,7 +66,7 @@ resource "google_cloudbuild_trigger" "trigger-api" {
       name = "gcr.io/cloud-builders/docker"
       args = [
         "build", "-t",
-        "${var.region}-docker.pkg.dev/${var.project_id}/suara-nusa-labs/suara-nusa-api",
+        "${var.region}-docker.pkg.dev/${var.project_id}/suara-nusa-dev-labs/suara-nusa-api",
         "."
       ]
     }
@@ -76,7 +76,7 @@ resource "google_cloudbuild_trigger" "trigger-api" {
       name = "gcr.io/cloud-builders/docker"
       args = [
         "push",
-        "${var.region}-docker.pkg.dev/${var.project_id}/suara-nusa-labs/suara-nusa-api",
+        "${var.region}-docker.pkg.dev/${var.project_id}/suara-nusa-dev-labs/suara-nusa-api",
       ]
     }
 
@@ -86,21 +86,21 @@ resource "google_cloudbuild_trigger" "trigger-api" {
       entrypoint = "gcloud"
       args = [
         "run", "deploy", "suara-nusa-api", # Nama service Cloud Run
-        "--image", "${var.region}-docker.pkg.dev/${var.project_id}/suara-nusa-labs/suara-nusa-api",
+        "--image", "${var.region}-docker.pkg.dev/${var.project_id}/suara-nusa-dev-labs/suara-nusa-api",
         "--region", var.region,
         "--platform", "managed",
         "--allow-unauthenticated"                     # Hapus ini jika hanya ingin akses terbatas
       ]
     }
 
-    images = ["${var.region}-docker.pkg.dev/${var.project_id}/suara-nusa-labs/suara-nusa-api"]
+    images = ["${var.region}-docker.pkg.dev/${var.project_id}/suara-nusa-dev-labs/suara-nusa-api"]
   }
   depends_on = [google_cloudbuildv2_repository.repository]
 }
 
 # Menggunakan data source untuk mengambil informasi image
 data "google_container_registry_image" "suara_nusa_api_image" {
-  name = "${var.region}-docker.pkg.dev/${var.project_id}/suara-nusa-labs/suara-nusa-api"
+  name = "${var.region}-docker.pkg.dev/${var.project_id}/suara-nusa-dev-labs/suara-nusa-api"
 }
 
 

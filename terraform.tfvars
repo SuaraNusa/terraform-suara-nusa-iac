@@ -1,9 +1,11 @@
 # Project Configuration
-project_id     = "suara-nusa-labs"
-project_number = 158751523704
-project_name = "suara-nusa-labs"
+project_id     = "suara-nusa-dev-labs"
+project_number = 370820562501
+project_name = "suara-nusa-dev-labs"
 # Region
 region = "us-central1"
 zone = "us-central1-a"
 # IAM
 service_account_role = ["roles/storage.objectAdmin", "roles/run.admin"]
+# GitHub Token
+github_personal_access_token="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"
