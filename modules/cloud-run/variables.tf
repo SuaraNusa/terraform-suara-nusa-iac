@@ -13,7 +13,7 @@ variable "cloud_run_service_name" {
   type        = string
 }
 
-variable "database_connection_name" {
-  description = "Name of the database connection."
-  type        = string
-}
+# variable "database_connection_name" {
+#   description = "Name of the database connection."
+#   type        = string
+# }
