@@ -38,5 +38,10 @@ variable "location" {
 variable "github_personal_access_token" {
   description = "Github personal access token for GitHub."
   type        = string
+}
 
+
+variable "first_time" {
+  description = "It is first time to trigger build"
+  type        = bool
 }

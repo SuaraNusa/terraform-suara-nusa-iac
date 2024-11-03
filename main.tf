@@ -12,6 +12,13 @@ module "cloud_build" {
   github_personal_access_token = var.github_personal_access_token
 }
 
+module "local-exec" {
+  source = "./modules/local-exec"
+  trigger_name = module.cloud_build.cloudbuild_trigger_name
+  first_time = var.first_time
+}
+
+
 module "container_registry" {
   source     = "./modules/container-registry"
   project_id = var.project_id
