@@ -12,3 +12,8 @@ variable "cloud_run_service_name" {
   description = "Name of the cloud service."
   type        = string
 }
+
+variable "database_connection_name" {
+  description = "Name of the database connection."
+  type        = string
+}

@@ -10,6 +10,14 @@ resource "google_cloud_run_service" "default" {
     }
   }
 
+  metadata {
+    annotations = {
+      "autoscaling.knative.dev/maxScale"      = "1000"
+      "run.googleapis.com/cloudsql-instances" = var.database_connection_name
+      "run.googleapis.com/client-name"        = "terraform"
+    }
+  }
+
   traffic {
     percent         = 100
     latest_revision = true
