@@ -81,30 +81,6 @@ resource "google_cloudbuild_trigger" "trigger-api" {
       ]
     }
 
-    # Step 3: Deploy to Cloud Run
-    step {
-      name       = "gcr.io/google.com/cloudsdktool/cloud-sdk"
-      entrypoint = "gcloud"
-      args = [
-        "run", "deploy", "suara-nusa-api",
-        "--image", "${var.region}-docker.pkg.dev/${var.project_id}/suara-nusa-dev-labs/suara-nusa-api",
-        "--region", var.region,
-        "--platform", "managed",
-        "--allow-unauthenticated",
-        "--set-env-vars", "DATABASE_URL=mysql://root:root@localhost:3306/nest_suara_nusa_api?schema=public",
-        "--set-env-vars", "JWT_SECRET_KEY=reallySecretKey",
-        "--set-env-vars", "GOOGLE_CLIENT_ID=68022646682-25ckc588cscgnb3bg4g7nipe5bkeger9.apps.googleusercontent.com",
-        "--set-env-vars", "GOOGLE_CLIENT_SECRET_KEY=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",
-        "--set-env-vars", "GOOGLE_CLIENT_CALLBACK_URL=http://localhost:3000/authentication/google-redirect",
-        "--set-env-vars", "NODE_MAILER_HOST=sandbox.smtp.mailtrap.io",
-        "--set-env-vars", "NODE_MAILER_PORT=587",
-        "--set-env-vars", "NODE_MAILER_USERNAME=a8939388d3a706",
-        "--set-env-vars", "NODE_MAILER_PASSWORD=e026d9ce74f41e",
-        "--set-env-vars", "NODE_MAILER_IS_SECURE=false",
-        "--set-env-vars", "NODE_MAILER_DEFAULT_ADDRESS=admin@suaranusa.com",
-        "--set-env-vars", "NODE_MAILER_APP_NAME=SuaraNusa"
-      ]
-    }
     images = ["${var.region}-docker.pkg.dev/${var.project_id}/suara-nusa-dev-labs/suara-nusa-api"]
   }
   depends_on = [google_cloudbuildv2_repository.repository]
@@ -118,5 +94,9 @@ data "google_container_registry_image" "suara_nusa_api_image" {
 
 output "suara_nusa_api_image_name" {
   value = data.google_container_registry_image.suara_nusa_api_image.name
+}
+
+output "cloudbuild_trigger_name" {
+  value = google_cloudbuild_trigger.trigger-api.name
 }
 
