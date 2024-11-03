@@ -32,6 +32,6 @@ variable "service_account_role" {
 variable "location" {
   description = "Location of the bucket."
   type        = string
-  default     = "us-west1"
+  default     = "us-central1"
 }
 
