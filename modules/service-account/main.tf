@@ -29,6 +29,8 @@ resource "google_project_iam_member" "cloud_run_developer" {
   member  = "serviceAccount:${google_service_account.cloudbuild_service_account.email}"
 }
 
+
+
 output "cloudbuild_service_account_id" {
   value = google_service_account.cloudbuild_service_account.id
 }
