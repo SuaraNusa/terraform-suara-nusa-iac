@@ -23,3 +23,8 @@ variable "service_account_id" {
   description = "Service account ID for Terraform service account."
   type        = string
 }
+
+variable "github_personal_access_token" {
+  description = "Token for the Github runner Github token"
+  type        = string
+}

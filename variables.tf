@@ -6,7 +6,7 @@ variable "project_id" {
 variable "project_name" {
   description = "Name of the GCP project."
   type        = string
-  default     = "suara-nusa-labs"
+  default     = "suara-nusa-dev-labs"
 }
 
 variable "project_number" {
@@ -35,3 +35,8 @@ variable "location" {
   default     = "us-central1"
 }
 
+variable "github_personal_access_token" {
+  description = "Github personal access token for GitHub."
+  type        = string
+
+}
