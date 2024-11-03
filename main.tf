@@ -27,13 +27,6 @@ module "service_account" {
 }
 
 
-module "cloud_run" {
-  source                   = "./modules/cloud-run"
-  cloud_run_service_name   = "crun"
-  image_name               = module.cloud_build.suara_nusa_api_image_name
-  location                 = var.location
-}
-
 
 # module "cloud_sql" {
 #   source = "./modules/cloud-sql"
