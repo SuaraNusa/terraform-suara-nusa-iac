@@ -3,7 +3,6 @@ provider "google" {
   region  = var.region
 }
 
-
 module "cloud_build" {
   source             = "./modules/cloud-build"
   project_id         = var.project_id
@@ -19,15 +18,9 @@ module "container_registry" {
 
 }
 
-
 module "service_account" {
   source               = "./modules/service-account"
   service_account_role = var.service_account_role
   project_id           = var.project_id
 }
 
-
-
-# module "cloud_sql" {
-#   source = "./modules/cloud-sql"
-# }
