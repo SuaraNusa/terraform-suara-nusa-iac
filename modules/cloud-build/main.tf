@@ -20,7 +20,7 @@ resource "google_secret_manager_secret_version" "github-token-secret-version" {
 # Membuat koneksi ke GitHub
 resource "google_cloudbuildv2_connection" "github_connection" {
   project = var.project_id
-  location = "us-west1"  # atau region spesifik seperti "us-west1"
+  location = "us-central1"  # atau region spesifik seperti "us-central1"
   name    = "suara-nusa-connection"
 
   github_config {
@@ -46,7 +46,7 @@ resource "google_cloudbuildv2_repository" "repository" {
 
 resource "google_cloudbuild_trigger" "trigger-api" {
   name            = "trigger-api"
-  location        = "us-west1"
+  location        = "us-central1"
   service_account = var.service_account_id  # Menggunakan akun layanan kustom
 
   repository_event_config {
@@ -58,9 +58,10 @@ resource "google_cloudbuild_trigger" "trigger-api" {
 
   build {
     options {
-      logging = "NONE"
+      logging = "CLOUD_LOGGING_ONLY"
     }
 
+    # Step 1: Build Docker image
     step {
       name = "gcr.io/cloud-builders/docker"
       args = [
@@ -69,11 +70,26 @@ resource "google_cloudbuild_trigger" "trigger-api" {
         "."
       ]
     }
+
+    # Step 2: Push Docker image to Artifact Registry
     step {
       name = "gcr.io/cloud-builders/docker"
       args = [
         "push",
         "${var.region}-docker.pkg.dev/${var.project_id}/suara-nusa-labs/suara-nusa-api",
+      ]
+    }
+
+    # Step 3: Deploy to Cloud Run
+    step {
+      name = "gcr.io/google.com/cloudsdktool/cloud-sdk" # Menggunakan image Cloud SDK untuk deploy ke Cloud Run
+      entrypoint = "gcloud"
+      args = [
+        "run", "deploy", "suara-nusa-api", # Nama service Cloud Run
+        "--image", "${var.region}-docker.pkg.dev/${var.project_id}/suara-nusa-labs/suara-nusa-api",
+        "--region", var.region,
+        "--platform", "managed",
+        "--allow-unauthenticated"                     # Hapus ini jika hanya ingin akses terbatas
       ]
     }
 
@@ -84,7 +100,7 @@ resource "google_cloudbuild_trigger" "trigger-api" {
 
 # Menggunakan data source untuk mengambil informasi image
 data "google_container_registry_image" "suara_nusa_api_image" {
-  name = "gcr.io/${var.project_id}/suara-nusa-api"
+  name = "${var.region}-docker.pkg.dev/${var.project_id}/suara-nusa-labs/suara-nusa-api"
 }
 
 
