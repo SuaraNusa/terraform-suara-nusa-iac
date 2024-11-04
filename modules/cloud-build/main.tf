@@ -1,5 +1,3 @@
-
-
 # Membuat koneksi ke GitHub
 resource "google_cloudbuildv2_connection" "github_connection" {
   project = var.project_id
