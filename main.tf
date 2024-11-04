@@ -49,3 +49,8 @@ module "cloud_run" {
   database_url_id          = module.secret_manager.database_url_id
   service_account_name     = module.service_account.cloudbuild_service_account_email
 }
+
+module "cloud_storage" {
+  source = "./modules/cloud-storage"
+  cloud_run_service_account_email = module.service_account.cloudbuild_service_account_email
+}
