@@ -4,12 +4,12 @@ provider "google" {
 }
 
 module "cloud_build" {
-  source                       = "./modules/cloud-build"
-  project_id                   = var.project_id
-  region                       = var.region
-  project_number               = var.project_number
-  service_account_id           = module.service_account.cloudbuild_service_account_id
-  github_personal_access_token = var.github_personal_access_token
+  source                         = "./modules/cloud-build"
+  project_id                     = var.project_id
+  region                         = var.region
+  project_number                 = var.project_number
+  service_account_id             = module.service_account.cloudbuild_service_account_id
+  github_token_secret_version_id = module.secret_manager.github_token_secret_version_id
 }
 
 module "local-exec" {
@@ -36,7 +36,8 @@ module "cloud_sql" {
 }
 
 module "secret_manager" {
-  source = "./modules/secret-manager"
+  source                       = "./modules/secret-manager"
+  github_personal_access_token = var.github_personal_access_token
 }
 
 module "cloud_run" {
