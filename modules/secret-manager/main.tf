@@ -1,7 +1,8 @@
 resource "google_secret_manager_secret" "database_url" {
   secret_id = "DATABASE_URL"
   replication {
-    automatic = true
+    auto {
+    }
   }
 }
 
@@ -13,7 +14,8 @@ resource "google_secret_manager_secret_version" "database_url_version" {
 resource "google_secret_manager_secret" "jwt_secret_key" {
   secret_id = "JWT_SECRET_KEY"
   replication {
-    automatic = true
+    auto {
+    }
   }
 }
 
