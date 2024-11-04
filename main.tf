@@ -27,7 +27,7 @@ module "container_registry" {
 
 module "service_account" {
   source               = "./modules/service-account"
-  service_account_role = var.service_account_role
+  project_number       = var.project_number
   project_id           = var.project_id
 }
 

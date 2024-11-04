@@ -1,8 +1,3 @@
-resource "google_project_iam_member" "cloudbuild_sa_secret_accessor" {
-  project = var.project_id
-  role    = "roles/secretmanager.secretAccessor"
-  member  = "serviceAccount:service-${var.project_number}@gcp-sa-cloudbuild.iam.gserviceaccount.com"
-}
 
 
 # Membuat koneksi ke GitHub

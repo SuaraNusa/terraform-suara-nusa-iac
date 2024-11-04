@@ -29,6 +29,11 @@ resource "google_project_iam_member" "cloud_run_developer" {
   member  = "serviceAccount:${google_service_account.cloudbuild_service_account.email}"
 }
 
+resource "google_project_iam_member" "cloudbuild_sa_secret_accessor" {
+  project = var.project_id
+  role    = "roles/secretmanager.secretAccessor"
+  member  = "serviceAccount:service-${var.project_number}@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+}
 
 
 output "cloudbuild_service_account_id" {
