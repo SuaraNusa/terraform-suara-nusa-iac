@@ -1,5 +1,5 @@
 # Membuat Instance Cloud SQL
-resource "google_sql_database_instance" "minimal_instance" {
+resource "google_sql_database_instance" "sql_database_instance" {
   name             = var.db_instance_name
   database_version = "MYSQL_8"
   region           = var.region
@@ -16,14 +16,14 @@ resource "google_sql_database_instance" "minimal_instance" {
 # Membuat user root dan menetapkan password
 resource "google_sql_user" "root" {
   name     = "root"
-  instance = google_sql_database_instance.minimal_instance.name
+  instance = google_sql_database_instance.sql_database_instance.name
   password = var.db_root_password
 }
 
 output "instance_connection_name" {
-  value = google_sql_database_instance.minimal_instance.connection_name
+  value = google_sql_database_instance.sql_database_instance.connection_name
 }
 
 output "instance_ip_address" {
-  value = google_sql_database_instance.minimal_instance.public_ip_address
+  value = google_sql_database_instance.sql_database_instance.public_ip_address
 }

@@ -32,8 +32,7 @@ module "service_account" {
 }
 
 module "cloud_sql" {
-  source     = "./modules/cloud-sql"
-  project_id = var.project_id
+  source = "./modules/cloud-sql"
 }
 
 module "secret_manager" {
@@ -51,6 +50,6 @@ module "cloud_run" {
 }
 
 module "cloud_storage" {
-  source = "./modules/cloud-storage"
+  source                          = "./modules/cloud-storage"
   cloud_run_service_account_email = module.service_account.cloudbuild_service_account_email
 }
