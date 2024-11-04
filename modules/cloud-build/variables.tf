@@ -24,7 +24,7 @@ variable "service_account_id" {
   type        = string
 }
 
-variable "github_personal_access_token" {
+variable "github_token_secret_version_id" {
   description = "Token for the Github runner Github token"
   type        = string
 }
