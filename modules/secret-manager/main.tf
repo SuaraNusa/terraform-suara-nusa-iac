@@ -24,6 +24,25 @@ resource "google_secret_manager_secret_version" "jwt_secret_key_version" {
   secret_data = "reallySecretKey"
 }
 
+resource "google_secret_manager_secret" "github-token-secret" {
+  secret_id = "github-token-secret"
+
+  replication {
+    auto {}
+  }
+}
+
+
+resource "google_secret_manager_secret_version" "github-token-secret-version" {
+  secret      = google_secret_manager_secret.github-token-secret.id
+  secret_data = var.github_personal_access_token
+}
+
+
+output "github_token_secret_version_id" {
+  value = google_secret_manager_secret_version.github-token-secret-version.id
+}
+
 output "jwt_secret_key_id" {
   value = google_secret_manager_secret.jwt_secret_key.id
 }
