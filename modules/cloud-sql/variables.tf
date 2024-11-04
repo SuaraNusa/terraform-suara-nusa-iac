@@ -15,6 +15,6 @@ variable "db_instance_name" {
 
 variable "db_root_password" {
   description = "Password untuk user root MySQL"
-  default     = "securepassword"
+  default     = "root"
   sensitive   = true
 }
