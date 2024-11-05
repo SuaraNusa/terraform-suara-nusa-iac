@@ -3,6 +3,21 @@ provider "google" {
   region  = var.region
 }
 
+resource "google_storage_bucket" "auto-expire" {
+  name          = "auto-expiring-bucket"
+  location      = "US"
+  force_destroy = true
+
+  lifecycle_rule {
+    condition {
+      age = 1
+    }
+    action {
+      type = "AbortIncompleteMultipartUpload"
+    }
+  }
+}
+
 # module "cloud_build" {
 #   source                         = "./modules/cloud-build"
 #   project_id                     = var.project_id
