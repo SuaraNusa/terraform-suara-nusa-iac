@@ -3,8 +3,6 @@ provider "google" {
   region  = var.region
 }
 
-
-
 # module "cloud_build" {
 #   source                         = "./modules/cloud-build"
 #   project_id                     = var.project_id
@@ -62,4 +60,10 @@ module "cloud-build-job" {
   project_id                     = var.project_id
   region                         = var.region
   service_account_id             = module.service_account.cloudbuild_service_account_id
+}
+
+module "local-exec-job" {
+  source       = "./modules/local-exec-job"
+  first_time   = true
+  trigger_name = module.cloud-build-job.cloudbuild_trigger_name
 }
