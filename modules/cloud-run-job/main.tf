@@ -6,7 +6,7 @@ resource "google_cloud_run_v2_job" "default" {
   template {
     template {
       containers {
-        image = "us-docker.pkg.dev/cloudrun/container/job"
+        image = var.image_name
       }
     }
   }
