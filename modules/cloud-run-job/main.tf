@@ -9,5 +9,15 @@ resource "google_cloud_run_v2_job" "default" {
         image = var.image_name
       }
     }
+
   }
+
+}
+
+output "cloud_run_job_name" {
+  value = google_cloud_run_v2_job.default.name
+}
+
+output "cloud_run_job_location" {
+  value = google_cloud_run_v2_job.default.location
 }
