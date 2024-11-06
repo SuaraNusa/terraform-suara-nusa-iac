@@ -1,20 +1,23 @@
 resource "google_cloud_scheduler_job" "job" {
-  name             = "trigger-job"
+  provider         = google-beta
+  name             = "schedule-job"
   description      = "test http job"
-  schedule         = "0 0 */7 * *"
-  time_zone        = "America/New_York"
+  schedule         = "*/8 * * * *"
   attempt_deadline = "320s"
+  region           = var.region
+  project          = var.project_id
 
   retry_config {
-    retry_count = 1
+    retry_count = 3
   }
 
   http_target {
     http_method = "POST"
-    uri         = "${var.cloud_run_job}/run_etl"
-    body = base64encode("{\"foo\":\"bar\"}")
-    headers = {
-      "Content-Type" = "application/json"
+    uri         = "https://${var.cloud_run_job_default_location}-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/${var.project_number}/jobs/${var.cloud_run_job_name}:run"
+    oauth_token {
+      service_account_email = var.cloud_run_job_sa_email
     }
   }
+
+
 }
