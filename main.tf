@@ -3,6 +3,10 @@ provider "google" {
   region  = var.region
 }
 
+provider "google-beta" {
+  project = var.project_id
+  region  = var.region
+}
 # module "cloud_build" {
 #   source                         = "./modules/cloud-build"
 #   project_id                     = var.project_id
@@ -64,6 +68,18 @@ module "cloud-build-job" {
 
 module "local-exec-job" {
   source       = "./modules/local-exec-job"
-  first_time   = true
+  first_time   = false
   trigger_name = module.cloud-build-job.cloudbuild_trigger_name
+}
+
+module "cloud-run-job" {
+  source     = "./modules/cloud-run-job"
+  region     = var.region
+  image_name = module.cloud-build-job.suara_nusa_scraping_elt_job_name
+}
+
+module "cloud_storage_job" {
+  source                          = "./modules/cloud-storage-job"
+  cloud_run_service_account_email = module.service_account.cloudbuild_service_account_email
+  region                          = var.region
 }
