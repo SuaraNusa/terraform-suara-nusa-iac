@@ -1,5 +1,5 @@
 resource "google_storage_bucket" "auto-expire" {
-  name          = "suara-nusa-dev-labs"
+  name          = "suara-nusa-dev-labs-job"
   location      = "US"
   force_destroy = true
 
