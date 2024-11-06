@@ -68,7 +68,7 @@ module "cloud-build-job" {
 
 module "local-exec-job" {
   source       = "./modules/local-exec-job"
-  first_time   = false
+  first_time   = true
   trigger_name = module.cloud-build-job.cloudbuild_trigger_name
 }
 
@@ -82,4 +82,15 @@ module "cloud_storage_job" {
   source                          = "./modules/cloud-storage-job"
   cloud_run_service_account_email = module.service_account.cloudbuild_service_account_email
   region                          = var.region
+  depends_on = [module.local-exec-job]
+}
+
+module "cloud_scheduler" {
+  source                         = "./modules/cloud-scheduler"
+  cloud_run_job_default_location = module.cloud-run-job.cloud_run_job_location
+  cloud_run_job_name             = module.cloud-run-job.cloud_run_job_name
+  project_id                     = var.project_id
+  project_number                 = var.project_number
+  region                         = var.region
+  cloud_run_job_sa_email         = module.service_account.cloudbuild_service_account_email
 }
