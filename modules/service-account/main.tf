@@ -41,6 +41,12 @@ resource "google_project_iam_member" "cloud_scheduler_admin" {
   member  = "serviceAccount:${google_service_account.cloudbuild_service_account.email}"
 }
 
+resource "google_project_iam_member" "secret_accessor" {
+  project = var.project_id
+  role    = "roles/secretmanager.secretAccessor"
+  member  = "serviceAccount:${google_service_account.cloudbuild_service_account.email}"
+}
+
 resource "google_project_iam_member" "cloudbuild_sa_secret_accessor" {
   project = var.project_id
   role    = "roles/secretmanager.secretAccessor"

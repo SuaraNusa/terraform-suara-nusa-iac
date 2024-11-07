@@ -1,7 +1,7 @@
 # Membuat Instance Cloud SQL
 resource "google_sql_database_instance" "sql_database_instance" {
   name             = var.db_instance_name
-  database_version = "MYSQL_8"
+  database_version = "MYSQL_8_0_31"
   region           = var.region
 
   settings {

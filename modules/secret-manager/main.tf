@@ -1,5 +1,5 @@
 resource "google_secret_manager_secret" "database_url" {
-  secret_id = "DATABASE_URL"
+  secret_id = "database_url"
   replication {
     auto {
     }
@@ -12,7 +12,7 @@ resource "google_secret_manager_secret_version" "database_url_version" {
 }
 
 resource "google_secret_manager_secret" "jwt_secret_key" {
-  secret_id = "JWT_SECRET_KEY"
+  secret_id = "jwt_secret_key"
   replication {
     auto {
     }
@@ -44,9 +44,9 @@ output "github_token_secret_version_id" {
 }
 
 output "jwt_secret_key_id" {
-  value = google_secret_manager_secret.jwt_secret_key.id
+  value = google_secret_manager_secret.jwt_secret_key.secret_id
 }
 
 output "database_url_id" {
-  value = google_secret_manager_secret.database_url.id
+  value = google_secret_manager_secret.database_url.secret_id
 }
