@@ -1,9 +1,9 @@
 # Membuat Instance Cloud SQL
 resource "google_sql_database_instance" "sql_database_instance" {
-  name             = var.db_instance_name
-  database_version = "MYSQL_8_0_31"
-  region           = var.region
-
+  name                = var.db_instance_name
+  database_version    = "MYSQL_8_0_31"
+  region              = var.region
+  deletion_protection = false
   settings {
     tier = "db-f1-micro"  # Tier minimum untuk Cloud SQL MySQL
     availability_type = "ZONAL"      # Mode minimum untuk menghemat biaya
