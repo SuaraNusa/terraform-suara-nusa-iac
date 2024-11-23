@@ -35,7 +35,17 @@ module "service_account" {
 }
 
 module "cloud_sql" {
-  source = "./modules/cloud-sql"
+  source                 = "./modules/cloud-sql"
+  db_alfarezyyd_password = var.db_alfarezyyd_password
+}
+
+module "local_exec_sql" {
+  source                 = "./modules/local-exec-sql"
+  database_instance_name = module.cloud_sql.database_instance_name
+  first_time = var.first_time_exec_sql
+  depends_on = [
+    module.cloud_sql
+  ]
 }
 
 module "secret_manager" {
@@ -68,39 +78,39 @@ module "cloud_storage" {
   cloud_run_service_account_email = module.service_account.cloudbuild_service_account_email
 }
 
-module "cloud-build-job" {
-  source                         = "./modules/cloud-build-job"
-  github_token_secret_version_id = module.secret_manager.github_token_secret_version_id
-  project_id                     = var.project_id
-  region                         = var.region
-  service_account_id             = module.service_account.cloudbuild_service_account_id
-}
+# module "cloud-build-job" {
+#   source                         = "./modules/cloud-build-job"
+#   github_token_secret_version_id = module.secret_manager.github_token_secret_version_id
+#   project_id                     = var.project_id
+#   region                         = var.region
+#   service_account_id             = module.service_account.cloudbuild_service_account_id
+# }
 
-module "local-exec-job" {
-  source       = "./modules/local-exec-job"
-  first_time   = true
-  trigger_name = module.cloud-build-job.cloudbuild_trigger_name
-}
+# module "local-exec-job" {
+#   source       = "./modules/local-exec-job"
+#   first_time   = true
+#   trigger_name = module.cloud-build-job.cloudbuild_trigger_name
+# }
+#
+# module "cloud-run-job" {
+#   source     = "./modules/cloud-run-job"
+#   region     = var.region
+#   image_name = module.cloud-build-job.suara_nusa_scraping_elt_job_name
+# }
+#
+# module "cloud_storage_job" {
+#   source                          = "./modules/cloud-storage-job"
+#   cloud_run_service_account_email = module.service_account.cloudbuild_service_account_email
+#   region                          = var.region
+#   depends_on = [module.local-exec-job]
+# }
 
-module "cloud-run-job" {
-  source     = "./modules/cloud-run-job"
-  region     = var.region
-  image_name = module.cloud-build-job.suara_nusa_scraping_elt_job_name
-}
-
-module "cloud_storage_job" {
-  source                          = "./modules/cloud-storage-job"
-  cloud_run_service_account_email = module.service_account.cloudbuild_service_account_email
-  region                          = var.region
-  depends_on = [module.local-exec-job]
-}
-
-module "cloud_scheduler" {
-  source                         = "./modules/cloud-scheduler"
-  cloud_run_job_default_location = module.cloud-run-job.cloud_run_job_location
-  cloud_run_job_name             = module.cloud-run-job.cloud_run_job_name
-  project_id                     = var.project_id
-  project_number                 = var.project_number
-  region                         = var.region
-  cloud_run_job_sa_email         = module.service_account.cloudbuild_service_account_email
-}
+# module "cloud_scheduler" {
+#   source                         = "./modules/cloud-scheduler"
+#   cloud_run_job_default_location = module.cloud-run-job.cloud_run_job_location
+#   cloud_run_job_name             = module.cloud-run-job.cloud_run_job_name
+#   project_id                     = var.project_id
+#   project_number                 = var.project_number
+#   region                         = var.region
+#   cloud_run_job_sa_email         = module.service_account.cloudbuild_service_account_email
+# }
