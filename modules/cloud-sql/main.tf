@@ -38,3 +38,7 @@ output "instance_ip_address" {
 output "database_instance_name" {
   value = google_sql_database_instance.sql_database_instance.name
 }
+
+output "database_connection_name" {
+  value = google_sql_database_instance.sql_database_instance.connection_name
+}

@@ -51,6 +51,8 @@ module "local_exec_sql" {
 module "secret_manager" {
   source                       = "./modules/secret-manager"
   github_personal_access_token = var.github_personal_access_token
+  database_connection_name = module.cloud_sql.database_connection_name
+  database_name = var.database_name
 }
 
 output "jwt_secret_key_id" {
