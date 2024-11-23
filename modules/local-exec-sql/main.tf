@@ -3,7 +3,7 @@ resource "null_resource" "create_database" {
 
   provisioner "local-exec" {
     command = <<EOT
-      gcloud sql databases create nest_suara_nusa_api \
+      gcloud sql databases create ${var.database_name} \
         --instance=${var.database_instance_name} \
         --charset=utf8 \
         --collation=utf8_general_ci
