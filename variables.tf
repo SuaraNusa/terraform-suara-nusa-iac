@@ -45,3 +45,12 @@ variable "first_time" {
   description = "It is first time to trigger build"
   type        = bool
 }
+
+variable "first_time_exec_sql" {
+  description = "It is first time to trigger exec sql"
+  type        = bool
+}
+
+variable "db_alfarezyyd_password" {
+  description = "Password for another user"
+}
