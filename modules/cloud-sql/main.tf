@@ -20,10 +20,21 @@ resource "google_sql_user" "root" {
   password = var.db_root_password
 }
 
+resource "google_sql_user" "users" {
+  name     = "alfarezyyd"
+  host     = "%"
+  instance = google_sql_database_instance.sql_database_instance.name
+  password = var.db_alfarezyyd_password
+}
+
 output "instance_connection_name" {
   value = google_sql_database_instance.sql_database_instance.connection_name
 }
 
 output "instance_ip_address" {
   value = google_sql_database_instance.sql_database_instance.public_ip_address
+}
+
+output "database_instance_name" {
+  value = google_sql_database_instance.sql_database_instance.name
 }
