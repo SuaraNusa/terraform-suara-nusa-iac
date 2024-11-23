@@ -8,7 +8,7 @@ resource "google_secret_manager_secret" "database_url" {
 
 resource "google_secret_manager_secret_version" "database_url_version" {
   secret      = google_secret_manager_secret.database_url.id
-  secret_data = "mysql://root:root@localhost:3306/nest_suara_nusa_api?schema=public"
+  secret_data = "mysql://root:root@localhost/${var.database_name}?socket=/cloudsql/${var.database_connection_name}"
 }
 
 resource "google_secret_manager_secret" "jwt_secret_key" {
