@@ -53,7 +53,11 @@ resource "google_project_iam_member" "cloudbuild_sa_secret_accessor" {
   member  = "serviceAccount:service-${var.project_number}@gcp-sa-cloudbuild.iam.gserviceaccount.com"
 }
 
-
+resource "google_project_iam_member" "cloud_build_sql_client" {
+  project = var.project_number
+  role    = "roles/cloudsql.client"
+  member  = "serviceAccount:${google_service_account.cloudbuild_service_account.email}"
+}
 output "cloudbuild_service_account_id" {
   value = google_service_account.cloudbuild_service_account.id
 }
