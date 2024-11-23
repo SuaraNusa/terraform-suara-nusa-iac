@@ -54,3 +54,7 @@ variable "first_time_exec_sql" {
 variable "db_alfarezyyd_password" {
   description = "Password for another user"
 }
+
+variable "database_name" {
+  description = "The name of the database"
+}

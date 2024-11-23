@@ -13,3 +13,4 @@ github_personal_access_token = "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"
 first_time             = false
 first_time_exec_sql    = false
 db_alfarezyyd_password = "root"
+database_name = "nest_suara_nusa_api"
