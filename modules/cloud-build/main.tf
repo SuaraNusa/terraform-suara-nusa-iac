@@ -57,10 +57,22 @@ resource "google_cloudbuild_trigger" "trigger-api" {
       ]
     }
 
+    step {
+      name = "gcr.io/cloud-builders/gcloud"
+      args = [
+        "run", "deploy", "suara-nusa-instance",
+        "--image=${var.region}-docker.pkg.dev/${var.project_id}/suara-nusa-dev-labs/suara-nusa-api",
+        "--region=${var.region}",
+        "--allow-unauthenticated"
+      ]
+    }
+
+
     images = ["${var.region}-docker.pkg.dev/${var.project_id}/suara-nusa-dev-labs/suara-nusa-api"]
   }
   depends_on = [google_cloudbuildv2_repository.repository]
 }
+
 
 # Menggunakan data source untuk mengambil informasi image
 data "google_container_registry_image" "suara_nusa_api_image" {
