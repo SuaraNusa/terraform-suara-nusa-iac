@@ -70,6 +70,18 @@ resource "google_cloud_run_service" "default" {
           name  = "NODE_MAILER_APP_NAME"
           value = "SuaraNusa"
         }
+        env {
+          name  = "EMAIL_SERVICE"
+          value = "gmail"
+        }
+        env {
+          name  = "EMAIL_USERNAME"
+          value = "adityaalfarezyd@gmail.com"
+        }
+        env {
+          name  = "EMAIL_PASSWORD"
+          value = "trlx ywyv jkwh womn"
+        }
       }
       service_account_name = var.service_account_name
     }
