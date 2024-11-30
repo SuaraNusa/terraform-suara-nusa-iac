@@ -42,7 +42,7 @@ module "cloud_sql" {
 module "local_exec_sql" {
   source                 = "./modules/local-exec-sql"
   database_instance_name = module.cloud_sql.database_instance_name
-  first_time = var.first_time_exec_sql
+  first_time             = var.first_time_exec_sql
   depends_on = [
     module.cloud_sql
   ]
@@ -51,8 +51,8 @@ module "local_exec_sql" {
 module "secret_manager" {
   source                       = "./modules/secret-manager"
   github_personal_access_token = var.github_personal_access_token
-  database_connection_name = module.cloud_sql.database_connection_name
-  database_name = var.database_name
+  database_connection_name     = module.cloud_sql.database_connection_name
+  database_name                = var.database_name
 }
 
 output "jwt_secret_key_id" {
@@ -78,6 +78,7 @@ module "cloud_run" {
 module "cloud_storage" {
   source                          = "./modules/cloud-storage"
   cloud_run_service_account_email = module.service_account.cloudbuild_service_account_email
+  region                          = var.region
 }
 
 # module "cloud-build-job" {
