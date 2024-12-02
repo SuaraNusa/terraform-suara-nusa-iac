@@ -81,6 +81,15 @@ module "cloud_storage" {
   region                          = var.region
 }
 
+module "cloud_build_infer" {
+  source                         = "./modules/cloud-build-infer"
+  github_token_secret_version_id = module.secret_manager.github_token_secret_version_id
+  project_id                     = var.project_id
+  project_number                 = var.project_number
+  region                         = var.region
+  service_account_id             = module.service_account.cloudbuild_service_account_id
+}
+
 # module "cloud-build-job" {
 #   source                         = "./modules/cloud-build-job"
 #   github_token_secret_version_id = module.secret_manager.github_token_secret_version_id
