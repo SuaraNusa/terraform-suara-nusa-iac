@@ -90,6 +90,15 @@ module "cloud_build_infer" {
   service_account_id             = module.service_account.cloudbuild_service_account_id
 }
 
+module "cloud_run_infer" {
+  source                   = "./modules/cloud-run-infer"
+  database_connection_name = module.cloud_sql.instance_connection_name
+  image_name               = module.cloud_build_infer.suara_nusa_api_infer_image_name
+  region                   = var.region
+  service_account_name     = module.service_account.cloudbuild_service_account_email
+
+}
+
 # module "cloud-build-job" {
 #   source                         = "./modules/cloud-build-job"
 #   github_token_secret_version_id = module.secret_manager.github_token_secret_version_id

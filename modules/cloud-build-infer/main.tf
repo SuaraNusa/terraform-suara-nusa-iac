@@ -57,6 +57,16 @@ resource "google_cloudbuild_trigger" "trigger-api-infer" {
       ]
     }
 
+
+    step {
+      name = "gcr.io/cloud-builders/gcloud"
+      args = [
+        "run", "deploy", "suara-nusa-instance",
+        "--image=${var.region}-docker.pkg.dev/${var.project_id}/suara-nusa-dev-labs/suara-nusa-infer-api",
+        "--region=${var.region}",
+        "--allow-unauthenticated"
+      ]
+    }
     images = ["${var.region}-docker.pkg.dev/${var.project_id}/suara-nusa-dev-labs/suara-nusa-infer-api"]
   }
   depends_on = [google_cloudbuildv2_repository.repository]
